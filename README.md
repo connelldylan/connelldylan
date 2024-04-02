@@ -1,5 +1,7 @@
 ### Hi there 👋
 
+
+## Hello! This is my repo for my personal website to brand myself. This website is hosted at connelldylan.com
 <!--
 **connelldylan/connelldylan** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
