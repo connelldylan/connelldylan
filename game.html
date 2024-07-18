@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Galaga Game</title>
+  <style>
+    canvas {
+      display: block;
+      margin: auto;
+      background: black;
+    }
+    #game-over-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      color: white;
+      text-align: center;
+      z-index: 10;
+    }
+    #game-over, #leaderboard, #restart-button, #auth-message {
+      margin-bottom: 10px;
+    }
+    #score, #lives {
+      text-align: center;
+      font-size: 1.5em;
+      color: white;
+    }
+    #restart-button {
+      font-size: 1em;
+      padding: 10px;
+      background-color: white;
+      color: black;
+      border: none;
+      cursor: pointer;
+    }
+    .highlight {
+      color: lightgreen;
+    }
+  </style>
+  <!-- Mobile Specific Metas -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="connelldylan home">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="author" content="Dylan Connell">
+  <meta name="theme-name" content="connelldylan">
+  <meta name="generator" content="ConnellDylan">
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="images/connelldylan_logo-circle.png" />
+  <!-- bootstrap.min css -->
+  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+  <!-- Ionic Icon Css -->
+  <link rel="stylesheet" href="plugins/Ionicons/css/ionicons.min.css">
+  <!-- animate.css -->
+  <link rel="stylesheet" href="plugins/animate-css/animate.css">
+  <!-- Magnify Popup -->
+  <link rel="stylesheet" href="plugins/magnific-popup/magnific-popup.css">
+  <!-- Slick CSS -->
+  <link rel="stylesheet" href="plugins/slick/slick.css">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+  <!--Font Awesome (For Facebook and Instagram Icons)-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+<body id="body" class="theme">
+  <!-- Star effects container -->
+  <div id="container-stars">
+    <div id="stars">
+      <div class="stars-move"></div>
+    </div>
+    <div id="rotating-stars"></div>
+  </div>
+  <header class="navigation; theme">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <nav class="navbar navbar-expand-lg p-0">
+            <a class="navbar-brand" href="index.html">
+              <img src="images/connelldylan_logo-circle.png" alt="Logo" style="height:45px; width:45px; margin-right: 8px;">
+              <span class="brand-title">Dylan Connell</span>
+            </a>
+            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="ion-android-menu"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarsExample09">
+              <ul class="navbar-nav">
+                <li class="nav-item btn @@service"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item btn @@service"><a class="nav-link" href="about.html">About</a></li>
+                <li class="nav-item btn @@service"><a class="nav-link" href="partnership.html">Students</a></li>
+                <li class="nav-item btn @@service"><a class="nav-link" href="staff.html">Staff</a></li>
+                <li class="nav-item btn @@service"><a class="nav-link" href="contact.html">Contact</a></li>
+                <li class="nav-item btn @@service"><a class="nav-link" href="login_screen.html">Login</a></li>
+                <li class="nav-item">
+                  <a class="btn-social btn" href="https://github.com/connelldylan" target="_blank">
+                    <i class="fab fa-github"></i>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="btn-social btn" href="https://www.linkedin.com/in/connelldylan/" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link nav-phone" href="tel:62623590907">
+                    <i class="fas fa-phone"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="score">Score: 0</div>
+  <div id="lives">Lives: 3</div>
+  <div id="game-over-popup">
+    <div id="game-over">Game Over</div>
+    <div id="leaderboard"></div>
+    <div id="auth-message"></div>
+    <button id="restart-button" onclick="restartGame()">Restart Game</button>
+  </div>
+  <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="copyright mb-0">Copyright 2024 &copy; La Crosse American Jiu Jitsu LLC. All rights reserved.
+            <br> Contact: info@lacrosseajj.com
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="container"></div>
+
+  <!--Scroll to top-->
+  <div id="scroll-to-top" class="scroll-to-top">
+    <span class="icon ion-ios-arrow-up"></span>
+  </div>
+
+  <!-- Essential Scripts -->
+  <!-- Main jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 3.1 -->
+  <script src="plugins/bootstrap/bootstrap.min.js"></script>
+  <!-- slick Carousel -->
+  <script src="plugins/slick/slick.min.js"></script>
+  <script src="plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+  <!-- filter -->
+  <script src="plugins/shuffle/shuffle.min.js"></script>
+  <script src="plugins/SyoTimer/jquery.syotimer.min.js"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU&libraries=places"></script>
+  <script src="plugins/google-map/map.js"></script>
+
+  <script src="js/script.js"></script>
+
+  <script type="module">
+    // Firebase configuration and initialization
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+    import { getFirestore, collection, doc, setDoc, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD5Zr3YPoEJCuAVXfv4T1tHmEb0Eswi0V0",
+      authDomain: "connelldylan-7dac1.firebaseapp.com",
+      projectId: "connelldylan-7dac1",
+      storageBucket: "connelldylan-7dac1.appspot.com",
+      messagingSenderId: "890104537894",
+      appId: "1:890104537894:web:56c8e7944304876fd297e7",
+      measurementId: "G-BBHXCENX9S"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let player, bullets, enemies, keys, gameLoopId, currentUser;
+    const enemySpeed = 2;
+    const bulletSpeed = 7;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Listen for changes in the user's authentication state
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          currentUser = user;
+          // User is signed in, start the game
+          initializeGame();
+        } else {
+          // User is signed out, display auth message
+          document.getElementById('auth-message').innerText = "Login or Sign Up to save your progress";
+          document.getElementById('game-over-popup').style.display = 'block';
+        }
+      });
+    });
+
+    function initializeGame() {
+      player = {
+        x: canvas.width / 2 - 25,
+        y: canvas.height - 60,
+        width: 50,
+        height: 50,
+        speed: 5,
+        lives: 3,
+        score: 0
+      };
+
+      bullets = [];
+      enemies = [];
+      keys = {};
+
+      document.getElementById('score').innerText = `Score: ${player.score}`;
+      document.getElementById('lives').innerText = `Lives: ${player.lives}`;
+      document.getElementById('game-over-popup').style.display = 'none';
+
+      document.addEventListener('keydown', (e) => {
+        keys[e.key] = true;
+      });
+
+      document.addEventListener('keyup', (e) => {
+        keys[e.key] = false;
+      });
+
+      gameLoop();
+    }
+
+    function drawPlayer() {
+      ctx.fillStyle = 'blue';
+      ctx.fillRect(player.x, player.y, player.width, player.height);
+    }
+
+    function drawBullet(bullet) {
+      ctx.fillStyle = 'white';
+      ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+    }
+
+    function drawEnemy(enemy) {
+      ctx.fillStyle = 'red';
+      ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+    }
+
+    function update() {
+      if (keys['a'] && player.x > 0) {
+        player.x -= player.speed;
+      }
+      if (keys['d'] && player.x < canvas.width - player.width) {
+        player.x += player.speed;
+      }
+      if (keys['w'] && player.y > 0) {
+        player.y -= player.speed;
+      }
+      if (keys['s'] && player.y < canvas.height - player.height) {
+        player.y += player.speed;
+      }
+      if (keys[' '] && bullets.length < 5) {
+        bullets.push({ x: player.x + player.width / 2 - 2.5, y: player.y, width: 5, height: 10 });
+        keys[' '] = false; // Prevent continuous shooting
+      }
+
+      bullets.forEach((bullet, index) => {
+        bullet.y -= bulletSpeed;
+        if (bullet.y < 0) {
+          bullets.splice(index, 1);
+        }
+      });
+
+      enemies.forEach((enemy, index) => {
+        enemy.y += enemySpeed;
+        if (enemy.y > canvas.height) {
+          enemies.splice(index, 1);
+          player.lives--;
+          updateScoreAndLives();
+          if (player.lives <= 0) {
+            gameOver();
+          }
+        }
+      });
+
+      bullets.forEach((bullet, bIndex) => {
+        enemies.forEach((enemy, eIndex) => {
+          if (bullet.x < enemy.x + enemy.width &&
+              bullet.x + bullet.width > enemy.x &&
+              bullet.y < enemy.y + enemy.height &&
+              bullet.y + bullet.height > enemy.y) {
+            bullets.splice(bIndex, 1);
+            enemies.splice(eIndex, 1);
+            player.score += 100;
+            updateScoreAndLives();
+          }
+        });
+      });
+
+      if (Math.random() < 0.02) {
+        enemies.push({ x: Math.random() * (canvas.width - 50), y: -50, width: 50, height: 50 });
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      drawPlayer();
+      bullets.forEach(drawBullet);
+      enemies.forEach(drawEnemy);
+    }
+
+    function gameLoop() {
+      update();
+      draw();
+      if (player.lives > 0) {
+        gameLoopId = requestAnimationFrame(gameLoop);
+      }
+    }
+
+    function updateScoreAndLives() {
+      document.getElementById('score').innerText = `Score: ${player.score}`;
+      document.getElementById('lives').innerText = `Lives: ${player.lives}`;
+    }
+
+    async function gameOver() {
+      document.getElementById('game-over').style.display = 'block';
+
+      if (currentUser) {
+        // Save the player's score to the leaderboard
+        await setDoc(doc(db, "Leaderboard", currentUser.uid), {
+          username: currentUser.displayName || "Anonymous",
+          score: player.score
+        });
+
+        // Fetch and display the top 10 players
+        const leaderboardRef = collection(db, "Leaderboard");
+        const q = query(leaderboardRef, orderBy("score", "desc"), limit(10));
+        const querySnapshot = await getDocs(q);
+
+        let leaderboardHTML = '<h2>Leaderboard</h2><ol>';
+        let playerAdded = false;
+
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          const highlightClass = (doc.id === currentUser.uid) ? 'highlight' : '';
+          leaderboardHTML += `<li class="${highlightClass}">${data.username}: ${data.score}</li>`;
+        });
+
+        if (!playerAdded && player.score > 0) {
+          leaderboardHTML += `<li class="highlight">${currentUser.displayName || "Anonymous"}: ${player.score}</li>`;
+        }
+
+        leaderboardHTML += '</ol>';
+        document.getElementById('leaderboard').innerHTML = leaderboardHTML;
+      } else {
+        document.getElementById('auth-message').innerText = "Login or Sign Up to save your progress";
+      }
+
+      document.getElementById('game-over-popup').style.display = 'block';
+    }
+
+    // Define the restartGame function in the global scope
+    window.restartGame = function() {
+      cancelAnimationFrame(gameLoopId);
+      initializeGame();
+    }
+
+    // Ensure the user is authenticated before starting the game
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        currentUser = user;
+        initializeGame();
+      } else {
+        document.getElementById('auth-message').innerText = "Login or Sign Up to save your progress";
+        document.getElementById('game-over-popup').style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>ConnellDylan | Login </title>
+  <title>ConnellDylan | Sign Up</title>
 
-  <!-- Mobile Specific Metas
-  ================================================== -->
+  <!-- Mobile Specific Metas -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="connelldylan home">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
@@ -14,7 +13,6 @@
   <meta name="generator" content="ConnellDylan">
   <!-- Favicon -->
   <link rel="shortcut icon" type="image/x-icon" href="images/connelldylan_logo-circle.png" />
-
 
   <!-- bootstrap.min css -->
   <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
@@ -31,6 +29,78 @@
   <!--Font Awesome (For Facebook and Instagram Icons)-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyD5Zr3YPoEJCuAVXfv4T1tHmEb0Eswi0V0",
+      authDomain: "connelldylan-7dac1.firebaseapp.com",
+      projectId: "connelldylan-7dac1",
+      storageBucket: "connelldylan-7dac1.appspot.com",
+      messagingSenderId: "890104537894",
+      appId: "1:890104537894:web:56c8e7944304876fd297e7",
+      measurementId: "G-BBHXCENX9S"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    async function handleSignUp(event) {
+      event.preventDefault(); // Prevent the default form submission behavior
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const username = document.getElementById('username').value;
+      const name = document.getElementById('name').value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      console.log('handleSignUp called');
+      console.log('Email:', email);
+      console.log('Password:', password);
+      console.log('Username:', username);
+      console.log('Name:', name);
+
+      try {
+        // Create a new user with Firebase Authentication
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        console.log('User signed up:', userCredential.user);
+
+        // Update the user's profile to include the displayName
+        await updateProfile(userCredential.user, {
+          displayName: username
+        });
+
+        // Save additional user information in Firestore
+        await setDoc(doc(db, "Users", userCredential.user.uid), {
+          username: username,
+          name: name,
+          email: email
+        });
+
+        alert('Sign-up successful!');
+        window.location.href = 'login_screen.html';
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+      }
+    }
+
+    // Ensure that the handleSignUp function is attached to the form's submit event
+    document.addEventListener('DOMContentLoaded', function() {
+      const signUpForm = document.getElementById('signUpForm');
+      signUpForm.addEventListener('submit', handleSignUp);
+    });
+  </script>
 </head>
 
 <body id="body" class="theme">
@@ -88,13 +158,16 @@
 
   
   <div id="Container">
-    <form class="form">
-      <div id="login-lable">Sign Up</div>
-      <input class="form-content" type="text" placeholder="UserName" />
-      <input class="form-content" type="password" placeholder="PassWord" />
-      <button>Continue</button>
+    <form class="form" id="signUpForm"> <!-- Removed the onsubmit attribute -->
+      <div id="signup-lable">Sign Up</div>
+      <input class="form-content" type="text" placeholder="Username" id="username"/>
+      <input class="form-content" type="text" placeholder="Name" id="name"/>
+      <input class="form-content" type="email" placeholder="Email" id="email"/>
+      <input class="form-content" type="password" placeholder="Password" id="password"/>
+      <input class="form-content" type="password" placeholder="Confirm Password" id="confirmPassword"/>
+      <button type="submit">Continue</button>
       <div class="account-text">
-        Already have an account? <a href="login_screen.html" style="color: blue">Login here</a>
+        Already have an account? <a href="login_screen.html" style="color: blue">Log in here.</a>
       </div>
     </form>
   
@@ -357,47 +430,41 @@
   </div>
 
 
-<footer class="footer">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<p class="copyright mb-0">Copyright 2024 &copy; La Crosse American Jiu Jitsu LLC. All rights reserved.
-					<br> Contact: info@lacrosseajj.com
-				</p>
-			</div>
-		</div>
-	</div>
-</footer>
-
-<div class="container"></div>
-
-<!--Scroll to top-->
-<div id="scroll-to-top" class="scroll-to-top">
-	<span class="icon ion-ios-arrow-up"></span>
-</div>
-
-    <!-- 
-    Essential Scripts
-    =====================================-->
-
-
-    <!-- Main jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 3.1 -->
-    <script src="plugins/bootstrap/bootstrap.min.js"></script>
-    <!-- slick Carousel -->
-    <script src="plugins/slick/slick.min.js"></script>
-    <script src="plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
-    <!-- filter -->
-    <script src="plugins/shuffle/shuffle.min.js"></script>
-    <script src="plugins/SyoTimer/jquery.syotimer.min.js"></script>
-    <!-- Google Map -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU&libraries=places"></script>
-    <script src="plugins/google-map/map.js"></script>
-
-    <script src="js/script.js"></script>
-
-
-    </body>
-
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="copyright mb-0">Copyright 2024 &copy; La Crosse American Jiu Jitsu LLC. All rights reserved.
+            <br> Contact: info@lacrosseajj.com
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <div class="container"></div>
+  
+  <!--Scroll to top-->
+  <div id="scroll-to-top" class="scroll-to-top">
+    <span class="icon ion-ios-arrow-up"></span>
+  </div>
+  
+  <!-- Essential Scripts -->
+  <!-- Main jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 3.1 -->
+  <script src="plugins/bootstrap/bootstrap.min.js"></script>
+  <!-- slick Carousel -->
+  <script src="plugins/slick/slick.min.js"></script>
+  <script src="plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+  <!-- filter -->
+  <script src="plugins/shuffle/shuffle.min.js"></script>
+  <script src="plugins/SyoTimer/jquery.syotimer.min.js"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU&libraries=places"></script>
+  <script src="plugins/google-map/map.js"></script>
+  
+  <script src="js/script.js"></script>
+  
+  </body>
 </html>

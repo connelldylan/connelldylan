@@ -29,6 +29,55 @@
   <!--Font Awesome (For Facebook and Instagram Icons)-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyD5Zr3YPoEJCuAVXfv4T1tHmEb0Eswi0V0",
+      authDomain: "connelldylan-7dac1.firebaseapp.com",
+      projectId: "connelldylan-7dac1",
+      storageBucket: "connelldylan-7dac1.appspot.com",
+      messagingSenderId: "890104537894",
+      appId: "1:890104537894:web:56c8e7944304876fd297e7",
+      measurementId: "G-BBHXCENX9S"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    async function handleLogin(event) {
+      event.preventDefault(); // Prevent the default form submission behavior
+      const email = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      console.log('handleLogin called');
+      console.log('Email:', email);
+      console.log('Password:', password);
+
+      try {
+        // Sign in with Firebase Authentication
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        console.log('User signed in:', userCredential.user);
+
+        alert('Login successful!');
+        window.location.href = 'profile_screen.html';
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Invalid email or password.');
+      }
+    }
+
+    // Ensure that the handleLogin function is attached to the form's submit event
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('loginForm');
+      loginForm.addEventListener('submit', handleLogin);
+    });
+  </script>
+
 </head>
 
 <body id="body" class="theme">
@@ -60,7 +109,6 @@
                 <li class="nav-item btn @@service"><a class="nav-link" href="partnership.html">Students</a></li>
                 <li class="nav-item btn @@service"><a class="nav-link" href="staff.html">Staff</a></li>
                 <li class="nav-item btn @@service"><a class="nav-link" href="contact.html">Contact</a></li>
-                <li class="nav-item btn @@service"><a class="nav-link" href="login_screen.html">Login</a></li>
                 <li class="nav-item">
                   <a class="btn-social btn" href="https://github.com/connelldylan" target="_blank">
                     <i class="fab fa-github"></i>
@@ -71,6 +119,7 @@
                     <i class="fab fa-linkedin-in"></i>
                   </a>
                 </li>
+                <li class="nav-item btn @@service"><a class="nav-link" href="login_screen.html">Login</a></li>
                 <li class="nav-item">
                   <a class="nav-link nav-phone" href="tel:62623590907">
                     <i class="fas fa-phone"></i>
@@ -85,9 +134,9 @@
   </header>
 
   <div id="Container" style="margin-bottom: 10vh">
-    <form class="form" id="loginForm" onsubmit="handleLogin(event)">
+    <form class="form" id="loginForm"> <!-- Removed the onsubmit attribute -->
       <div id="login-lable">Login</div>
-      <input class="form-content" type="text" placeholder="Username" id="username"/>
+      <input class="form-content" type="text" placeholder="Email" id="username"/>
       <input class="form-content" type="password" placeholder="Password" id="password"/>
       <button type="submit">Continue</button>
       <div class="account-text">
@@ -353,45 +402,6 @@
     </div>
   </div>
 
-  <script>
-    const webAppUrl = 'https://script.google.com/macros/s/AKfycbwErawRCMtnFAZWFawxQ6_v-DvEaBbBylv2fthdHcaIvqvIwnnF-wdoeD7-Q7PRWYJPAg/exec';
-  
-    async function handleLogin(event) {
-      event.preventDefault();
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-  
-      console.log('handleLogin called');
-      console.log('Username:', username);
-      console.log('Password:', password);
-  
-      try {
-        const response = await fetch(webAppUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ username, password }),
-        });
-  
-        console.log('Response:', response);
-  
-        const result = await response.json();
-        console.log('Result:', result);
-  
-        if (result.status === 'success') {
-          alert('Login successful!');
-          window.location.href = 'home_screen.html';
-        } else {
-          alert('Invalid username or password.');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred. Please try again.');
-      }
-    }
-  </script>
-
 <footer class="footer">
   <div class="container">
     <div class="row">
@@ -422,9 +432,7 @@
 <!-- filter -->
 <script src="plugins/shuffle/shuffle.min.js"></script>
 <script src="plugins/SyoTimer/jquery.syotimer.min.js"></script>
-<!-- Google Map -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU&libraries=places"></script>
-<script src="plugins/google-map/map.js"></script>
+
 
 <script src="js/script.js"></script>
 
