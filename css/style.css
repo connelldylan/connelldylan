@@ -2038,6 +2038,12 @@ ul.dropdown-menu li {
   width: 100%;
   height: auto;
 }
+
+.divider-img {
+  width: 100vw;
+  height: 5rem;
+}
+
 @media (max-width: 768px) {
   .alt-img {
     width: 100%;
