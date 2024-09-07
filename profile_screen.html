@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>ConnellDylan | Profile </title>
+  <title>ConnellDylan | Account </title>
 
   <!-- Mobile Specific Metas -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -58,7 +58,7 @@
           const userDoc = await getDoc(doc(db, "Users", user.uid));
           if (userDoc.exists()) {
             const userData = userDoc.data();
-            document.getElementById('userName').innerText = `Name: ${userData.name}`;
+            document.getElementById('userName').innerText = `Welcome Back ${userData.name}`;
           } else {
             console.log("No such document!");
           }
@@ -98,9 +98,16 @@
             <span class="brand-title">Dylan Connell</span>
           </a>
 
-          <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="ion-android-menu"></span>
+          <button class="navbar-toggler collapsed rainbow-button" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="ion-android-menu menu-icon"></span>
           </button>
+
+          <script>
+            document.querySelector('.navbar-toggler').addEventListener('click', function() {
+              const menuIcon = document.querySelector('.menu-icon');
+              menuIcon.classList.toggle('vertical');
+            });
+          </script>
 
           <div class="collapse navbar-collapse justify-content-end" id="navbarsExample09">
             <ul class="navbar-nav">
@@ -129,17 +136,17 @@
 </header>
 
   <div id="Container" style="margin-bottom: 10vh">
-    <h1>Profile</h1>
-    <p id="userName">Loading...</p>
+    <h1 id="userName" style="font-size: 32px; font-weight: bold;">Loading...</h1>
     <button id="signOutButton" class="btn btn-primary">Sign Out</button>
   </div>
 
-  <footer class="footer">
-    <div class="container">
+  <footer class="footer" style="color: #fff;">
+    <div class="container" style="background-color: #fff; width: 80%; margin: 0 auto; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
       <div class="row">
         <div class="col-md-12">
-          <p class="copyright mb-0">Copyright 2024 &copy; Dylan Connell. All rights reserved.
-            <br> Contact: info@connelldylan.com
+          <p class="copyright mb-0">
+            Copyright 2024 &copy; ConnellDylan LLC. All rights reserved.
+            <br> Contact: connelldylan@connelldylan.com
           </p>
         </div>
       </div>

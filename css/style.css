@@ -725,7 +725,7 @@ header .navbar-default .navbar-nav li a {
   }
 }
 .navigation .navbar-toggler {
-  font-size: 36px;
+  font-size: 80px;
   color: #fff;
 }
 .navigation .navbar-toggler:focus {
@@ -3525,4 +3525,37 @@ body {
 .carousel-control-prev:hover .carousel-control-prev-icon,
 .carousel-control-next:hover .carousel-control-next-icon {
   background-color: blue; /* Change background color to blue on hover */
+}
+
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.rainbow-button {
+  padding: 10px 20px;
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(270deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+  background-size: 1400% 1400%;
+  animation: gradientAnimation 7s infinite;
+  transition: transform 0.1s;
+}
+
+.rainbow-button:hover {
+  transform: scale(1.1);
+}
+
+.menu-icon {
+  display: inline-block;
+  transition: transform 0.5s;
+}
+
+.menu-icon.vertical {
+  transform: rotate(270deg);
 }

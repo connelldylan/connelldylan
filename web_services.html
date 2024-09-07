@@ -51,9 +51,16 @@
             <span class="brand-title">Dylan Connell</span>
           </a>
 
-          <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="ion-android-menu"></span>
+          <button class="navbar-toggler collapsed rainbow-button" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="ion-android-menu menu-icon"></span>
           </button>
+
+          <script>
+            document.querySelector('.navbar-toggler').addEventListener('click', function() {
+              const menuIcon = document.querySelector('.menu-icon');
+              menuIcon.classList.toggle('vertical');
+            });
+          </script>
 
           <div class="collapse navbar-collapse justify-content-end" id="navbarsExample09">
             <ul class="navbar-nav">
@@ -72,7 +79,7 @@
                   <i class="fab fa-linkedin-in"></i>
                 </a>
               </li>
-              <li class="nav-item btn @@service" style="margin-left: 22px"><a class="nav-link" href="profile_screen.html">Your Profile</a></li>
+              <li class="nav-item btn @@service" style="margin-left: 22px"><a class="nav-link" href="profile_screen.html">Your Account</a></li>
             </ul>
           </div>
         </nav>
@@ -133,7 +140,7 @@
     <div class="container">
         <!-- First Pair: Image Right, Text Left on Desktop -->
         <div class="align-items-center">
-            <div class="text-center" style="background: linear-gradient(135deg, rgba(0, 255, 204, 0.616), #000080); border: 4px solid #000;">
+            <div class="text-center" style="background: linear-gradient(135deg, rgba(0, 255, 204, 0.616), #000080f5); border: 4px solid #000;">
                 <!-- Text for Desktop Left -->
                 <div class="section-header">
                     <h3 style="margin-top: 8px;">Check Out Previous Websites I've Built!</h3>
@@ -160,7 +167,7 @@
   <div class="container">
       <!-- First Pair: Image Right, Text Left on Desktop -->
       <div class="align-items-center">
-          <div class="text-center" style="background: linear-gradient(135deg, #000080, rgb(205, 15, 252)); border: 4px solid #000;">
+          <div class="text-center" style="background: linear-gradient(135deg, #000080cb, rgba(205, 15, 252, 0.877)); border: 4px solid #000;">
               <!-- Text for Desktop Left -->
               <div class="section-header">
                   <h3 style="margin-top: 8px;">Get Started Today!</h3>
@@ -173,7 +180,7 @@
                 <h3 style="margin-top: 8px;">Contact Me:</h3>
             </div>
             <ul style="color: white;">
-              <li><strong> • Phone Number</strong>: 262.359.0907</li>
+              <li><strong> • Phone Number</strong>: 262-359-0907</li>
               <li><strong> • Email</strong>: connelldylan@connelldylan.com</li>
             </ul>
           </div>
@@ -181,16 +188,17 @@
   </div>
 </section>
 
-<footer class="footer">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<p class="copyright mb-0">Copyright 2024 &copy; Dylan Connell. All rights reserved.
-					<br> Contact: info@connelldylan.com
-				</p>
-			</div>
-		</div>
-	</div>
+<footer class="footer" style="color: #fff;">
+  <div class="container" style="background-color: #fff; width: 80%; margin: 0 auto; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <div class="row">
+      <div class="col-md-12">
+        <p class="copyright mb-0">
+          Copyright 2024 &copy; ConnellDylan LLC. All rights reserved.
+          <br> Contact: connelldylan@connelldylan.com
+        </p>
+      </div>
+    </div>
+  </div>
 </footer>
 
 <div class="container"></div>

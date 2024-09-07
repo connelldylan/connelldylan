@@ -106,9 +106,16 @@
             <span class="brand-title">Dylan Connell</span>
           </a>
 
-          <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="ion-android-menu"></span>
+          <button class="navbar-toggler collapsed rainbow-button" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="ion-android-menu menu-icon"></span>
           </button>
+
+          <script>
+            document.querySelector('.navbar-toggler').addEventListener('click', function() {
+              const menuIcon = document.querySelector('.menu-icon');
+              menuIcon.classList.toggle('vertical');
+            });
+          </script>
 
           <div class="collapse navbar-collapse justify-content-end" id="navbarsExample09">
             <ul class="navbar-nav">
@@ -127,7 +134,7 @@
                   <i class="fab fa-linkedin-in"></i>
                 </a>
               </li>
-              <li class="nav-item btn @@service" style="margin-left: 22px"><a class="nav-link" href="profile_screen.html">Your Profile</a></li>
+              <li class="nav-item btn @@service" style="margin-left: 22px"><a class="nav-link" href="profile_screen.html">Your Account</a></li>
             </ul>
           </div>
         </nav>
@@ -301,18 +308,18 @@
     </div>
   </section>
 
-<footer class="footer">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<p class="copyright mb-0">Copyright 2024 &copy; Dylan Connell. All rights reserved.
-					<br> Contact: info@connelldylan.com
-				</p>
-			</div>
-		</div>
-	</div>
-</footer>
-
+  <footer class="footer" style="color: #fff;">
+    <div class="container" style="background-color: #fff; width: 80%; margin: 0 auto; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="copyright mb-0">
+            Copyright 2024 &copy; ConnellDylan LLC. All rights reserved.
+            <br> Contact: connelldylan@connelldylan.com
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
 <div class="container"></div>
 
 <!--Scroll to top-->
