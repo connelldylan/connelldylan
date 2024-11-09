@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ConnellDylan | Checkout</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+    <!-- Mobile Specific Metas
+  ================================================== -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="connelldylan home">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="author" content="Dylan Connell">
+  <meta name="theme-name" content="connelldylan">
+  <meta name="generator" content="ConnellDylan">
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="images/connelldylan_logo-circle.png" />
+  <style>
+    .center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      padding: 40px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+    .container {
+      max-width: 800px;
+      width: 100%;
+    }
+    .back-button {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container center-container" style="text-align: center;">
+    <h1>ConnellDylan Hosting & Maintenace Service Plan Checkout</h1>
+    <h2 style="background-color: #000000; color:white; padding: 2%;">Total: $8.40/m</h2>
+    <div id="paypal-button-container-P-4F3259281S669003RM3Q4LGA"></div>
+    <button class="btn btn-secondary back-button" onclick="window.location.href='profile_screen.html'">Back</button>
+  </div>
+  <script src="https://www.paypal.com/sdk/js?client-id=ASAD-L7rEZfKbsXbJqA5MiFWS62UNhHvTnk7VCfe6ybpPSLfDhMtl9RI-eDXUiVqWA0TZL61w-mLB59Z&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+  <script>
+    paypal.Buttons({
+        style: {
+            shape: 'pill',
+            color: 'silver',
+            layout: 'vertical',
+            label: 'paypal',
+        },
+        createSubscription: function(data, actions) {
+          return actions.subscription.create({
+            plan_id: 'P-4F3259281S669003RM3Q4LGA'
+          });
+        },
+        onApprove: function(data, actions) {
+          alert(data.subscriptionID);
+        }
+    }).render('#paypal-button-container-P-4F3259281S669003RM3Q4LGA');
+  </script>
+</body>
+</html>
