@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wrestling Drill Coach</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #111;
+      color: #fff;
+      padding: 2rem;
+    }
+    h1 {
+      margin-bottom: 1rem;
+    }
+    button {
+      padding: 1rem 2rem;
+      margin: 0.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #007BFF;
+      color: white;
+    }
+    #status {
+      margin-top: 2rem;
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Wrestling Drill Coach</h1>
+  <button onclick="startDrill(5)">Start 5 Minute Drill</button>
+  <button onclick="startDrill(10)">Start 10 Minute Drill</button>
+  <div id="status"></div>
+
+  <script>
+    const moves = {
+      'Shot': 'move_clips/Shot.mp3',
+      'Double Shot': 'move_clips/Double_Shot.mp3',
+      'Sprawl': 'move_clips/Sprawl.mp3',
+      'Circle Left': 'move_clips/Circle_Left.mp3',
+      'Circle Right': 'move_clips/Circle_Right.mp3',
+      'Down Block': 'move_clips/Down_Block.mp3',
+      'Outside Single': 'move_clips/Outside_Single.mp3',
+      "Fireman's": 'move_clips/Firemans.mp3',
+      'Throw Bye': 'move_clips/Throw_Bye.mp3',
+      'Under Hook to Knee Pick': 'move_clips/Under_Hook_to_Knee_Pick.mp3',
+      'Inside Single': 'move_clips/Inside_Single.mp3',
+      'Duck Under': 'move_clips/Duck_Under.mp3',
+      'Ankle Pick': 'move_clips/Ankle_Pick.mp3'
+    };
+
+    let lastMove = null;
+    let drillEndTime;
+
+    function getNextMove() {
+      const keys = Object.keys(moves);
+
+      // Apply cadence rules
+      let allowedMoves = keys;
+      if (lastMove === 'Sprawl') {
+        allowedMoves = keys;
+      } else if (lastMove === 'Circle Left') {
+        allowedMoves = keys.filter(m => m !== 'Circle Left');
+      } else if (lastMove === 'Circle Right') {
+        allowedMoves = keys.filter(m => m !== 'Circle Right');
+      } else {
+        allowedMoves = keys.filter(m => !m.startsWith('Circle'));
+      }
+
+      const nextMove = allowedMoves[Math.floor(Math.random() * allowedMoves.length)];
+      lastMove = nextMove;
+      return nextMove;
+    }
+
+    function playMove(moveName) {
+      const audio = new Audio(moves[moveName]);
+      document.getElementById('status').innerText = moveName;
+      audio.play();
+    }
+
+    function startDrill(minutes) {
+      document.getElementById('status').innerText = 'Starting...';
+      drillEndTime = Date.now() + minutes * 60 * 1000;
+      lastMove = null;
+      runDrill();
+    }
+
+    function runDrill() {
+      if (Date.now() >= drillEndTime) {
+        document.getElementById('status').innerText = 'Drill Complete!';
+        return;
+      }
+
+      const setSize = Math.floor(Math.random() * 5) + 1; // 1–5 moves
+      const movesToCall = [];
+      for (let i = 0; i < setSize; i++) {
+        movesToCall.push(getNextMove());
+      }
+
+      let delay = 0;
+      movesToCall.forEach((move, index) => {
+        setTimeout(() => playMove(move), delay);
+        delay += 2000; // 2 sec between moves
+      });
+
+      const rest = Math.floor(Math.random() * 5 + 1) * 1000; // 1–5 sec rest
+      setTimeout(runDrill, delay + rest);
+    }
+  </script>
+</body>
+</html>
